@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 #####
-# VosNoms (Matricule) .~= À MODIFIER =~.
+# Alexandre Theisse 23 488 180
+# Louis-Vincent Capelli 23 211 533
+# Tom Sartori 23 222 497
 ###
 
 import numpy as np
