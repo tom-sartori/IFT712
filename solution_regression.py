@@ -26,7 +26,20 @@ class Regression:
         NOTE : En mettant phi_x = x, on a une fonction de base lineaire qui fonctionne pour une regression lineaire
         """
         # AJOUTER CODE ICI
-        phi_x = x
+
+        if np.isscalar(x):
+            # x is scalar.
+            phi_x = np.ones(self.M)
+            for i in range(0, self.M):
+                phi_x[i] = x ** (i + 1)
+        elif x.ndim == 1:
+            # x is a vector.
+            phi_x = np.ones((x.shape[0], self.M))
+            for i in range(0, self.M):
+                phi_x[:, i] = x ** (i + 1)
+        else:
+            phi_x = x
+
         return phi_x
 
     def recherche_hyperparametre(self, X, t):
@@ -50,6 +63,24 @@ class Regression:
         t: vecteur de cibles
         """
         # AJOUTER CODE ICI
+
+        k = 10
+
+        if len(X) < k:
+            k = len(X)
+
+        a = X.copy()
+
+        # Option 1
+        # np.random.shuffle(a)
+        # a = np.array_split(a, k)
+
+        # Option 2
+        # for i in range(k):
+        #     np.random.shuffle(a)
+        #     b = a[:int(0.8 * len(a))]
+        #     c = a[int(0.8 * len(a)):]
+
         self.M = 1
 
     def entrainement(self, X, t, using_sklearn=False):
@@ -78,12 +109,25 @@ class Regression:
         NOTE IMPORTANTE : lorsque self.M <= 0, il faut trouver la bonne valeur de self.M
 
         """
-        #AJOUTER CODE ICI
+        # AJOUTER CODE ICI
+
         if self.M <= 0:
             self.recherche_hyperparametre(X, t)
 
         phi_x = self.fonction_base_polynomiale(X)
         self.w = [0, 1]
+
+        if using_sklearn:
+            clf = linear_model.Ridge(alpha=1.0)
+            clf.fit(X=phi_x, y=t)
+            linear_model.Ridge()
+        else:
+            self.w = np.dot(
+                np.invert(
+                    (self.lamb * np.eye(self.M)) + np.dot(np.transpose(phi_x), phi_x)
+                ),
+                np.dot(np.transpose(phi_x), t)
+            )
 
     def prediction(self, x):
         """
@@ -95,6 +139,11 @@ class Regression:
         afin de calculer la prediction y(x,w) (equation 3.1 et 3.3).
         """
         # AJOUTER CODE ICI
+        # y = self.w[0]
+        # for i in range(len(x)):
+        #     y += self.w[i] * x[i]
+        # return y
+
         return 0.5
 
     @staticmethod
@@ -104,4 +153,10 @@ class Regression:
         la cible ``t`` et la prediction ``prediction``.
         """
         # AJOUTER CODE ICI
+        # x = 0
+        # for i in range(len(t)):
+        #     x = (t[i] - prediction[i]) ** 2
+        #
+        # return x
+
         return 0.0
