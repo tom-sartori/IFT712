@@ -38,7 +38,7 @@ class Regression:
             for i in range(0, self.M):
                 phi_x[:, i] = x ** (i + 1)
         else:
-            phi_x = x
+            raise ValueError("x is not a scalar or a vector.")
 
         return phi_x
 
@@ -64,24 +64,43 @@ class Regression:
         """
         # AJOUTER CODE ICI
 
+        # K-Fold
         k = 10
+        tested_M = np.arange(1, k + 1)
+        errors_valid = np.zeros(k)
 
         if len(X) < k:
             k = len(X)
 
-        a = X.copy()
+        X_copy = X.copy()
+        t_copy = t.copy()
 
-        # Option 1
-        # np.random.shuffle(a)
-        # a = np.array_split(a, k)
+        # Shuffle
+        c = list(zip(X_copy, t_copy))
+        random.shuffle(c)
+        X_copy, t_copy = zip(*c)
 
-        # Option 2
-        # for i in range(k):
-        #     np.random.shuffle(a)
-        #     b = a[:int(0.8 * len(a))]
-        #     c = a[int(0.8 * len(a)):]
+        X_copy = np.array(X_copy)
+        t_copy = np.array(t_copy)
 
-        self.M = 1
+        # Split
+        X_split = np.array_split(X_copy, k)
+        t_split = np.array_split(t_copy, k)
+
+        # Hyperparameter optimization
+        for i in range(0, k):
+            X_train = np.concatenate(X_split[:i] + X_split[i + 1:])
+            t_train = np.concatenate(t_split[:i] + t_split[i + 1:])
+            X_valid = X_split[i]
+            t_valid = t_split[i]
+            self.M = tested_M[i]
+            
+            self.entrainement(X_train, t_train)
+
+            predictions_valid = np.array([self.prediction(x) for x in X_valid])
+            errors_valid[i] = np.array([self.erreur(t_n, p_n) for t_n, p_n in zip(t_valid, predictions_valid)]).mean()
+
+        self.M = tested_M[np.argmin(errors_valid)]
 
     def entrainement(self, X, t, using_sklearn=False):
         """
@@ -115,17 +134,15 @@ class Regression:
             self.recherche_hyperparametre(X, t)
 
         phi_x = self.fonction_base_polynomiale(X)
-        self.w = [0, 1]
 
         if using_sklearn:
             clf = linear_model.Ridge(alpha=1.0)
             clf.fit(X=phi_x, y=t)
             linear_model.Ridge()
+            self.w = clf.coef_
         else:
-            self.w = np.dot(
-                np.invert(
-                    (self.lamb * np.eye(self.M)) + np.dot(np.transpose(phi_x), phi_x)
-                ),
+            self.w = np.linalg.solve(
+                self.lamb * np.eye(self.M) + np.dot(np.transpose(phi_x), phi_x),
                 np.dot(np.transpose(phi_x), t)
             )
 
@@ -139,12 +156,8 @@ class Regression:
         afin de calculer la prediction y(x,w) (equation 3.1 et 3.3).
         """
         # AJOUTER CODE ICI
-        # y = self.w[0]
-        # for i in range(len(x)):
-        #     y += self.w[i] * x[i]
-        # return y
 
-        return 0.5
+        return np.dot(np.transpose(self.w), self.fonction_base_polynomiale(x))
 
     @staticmethod
     def erreur(t, prediction):
@@ -153,10 +166,5 @@ class Regression:
         la cible ``t`` et la prediction ``prediction``.
         """
         # AJOUTER CODE ICI
-        # x = 0
-        # for i in range(len(t)):
-        #     x = (t[i] - prediction[i]) ** 2
-        #
-        # return x
-
-        return 0.0
+        
+        return (t - prediction) ** 2

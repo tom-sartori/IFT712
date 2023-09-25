@@ -20,6 +20,9 @@ def warning(erreur_test, erreur_apprentissage, bruit):
     # Écrivez des conditions simples, avec des valeurs approximatives "harcodées",
     # qui vérifient si nous sommes en présence de sur- ou sous-apprentissage.
 
+    # prendre en compte la différence entre les erreurs d'apprentissage et de test et l'amplitude du bruit
+    # éventuellement, prendre en compte le nombre de données d'entraînement et de test ?
+
 ################################
 # Execution en tant que script 
 #
