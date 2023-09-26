@@ -136,7 +136,7 @@ class Regression:
         phi_x = self.fonction_base_polynomiale(X)
 
         if using_sklearn:
-            clf = linear_model.Ridge(alpha=1.0)
+            clf = linear_model.Ridge(alpha=self.lamb)
             clf.fit(X=phi_x, y=t)
             linear_model.Ridge()
             self.w = clf.coef_
