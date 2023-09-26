@@ -138,8 +138,8 @@ class Regression:
         if using_sklearn:
             clf = linear_model.Ridge(alpha=self.lamb)
             clf.fit(X=phi_x, y=t)
-            linear_model.Ridge()
             self.w = clf.coef_
+            self.w[0] = clf.intercept_
         else:
             self.w = np.linalg.solve(
                 self.lamb * np.eye(self.M + 1) + np.dot(np.transpose(phi_x), phi_x),
