@@ -1,0 +1,2 @@
+Ajouter une dimension à phi_x : ok ?
+Valeur de M entre 1 et k : ok ?
