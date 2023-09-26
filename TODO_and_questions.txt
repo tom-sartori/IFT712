@@ -1,10 +1,2 @@
-"Si x est un scalaire, alors phi_x sera un vecteur à self.M dimensions : (x^1,x^2,...,x^self.M)"
-ça devrait pas être plutôt :
-"Si x est un scalaire, alors phi_x sera un vecteur à self.M dimensions : (x^0,x^1,...,x^self.M-1)"
-parce que le w calculé est de dimension self.M
-^^^^^^ peut-être la cause du fait que la méthode qui utilise sklearn ne marche pas
-
 TODO :
 - warnings
-- corriger le problème de la méthode qui utilise sklearn
-- tester pour être sûr que ça marche dans tous les cas
