@@ -29,14 +29,14 @@ class Regression:
 
         if np.isscalar(x):
             # x is scalar.
-            phi_x = np.ones(self.M)
-            for i in range(0, self.M):
-                phi_x[i] = x ** (i + 1)
+            phi_x = np.ones(self.M + 1)
+            for i in range(0, self.M + 1):
+                phi_x[i] = x ** i
         elif x.ndim == 1:
             # x is a vector.
-            phi_x = np.ones((x.shape[0], self.M))
-            for i in range(0, self.M):
-                phi_x[:, i] = x ** (i + 1)
+            phi_x = np.ones((x.shape[0], self.M + 1))
+            for i in range(0, self.M + 1):
+                phi_x[:, i] = x ** i
         else:
             raise ValueError("x is not a scalar or a vector.")
 
@@ -142,7 +142,7 @@ class Regression:
             self.w = clf.coef_
         else:
             self.w = np.linalg.solve(
-                self.lamb * np.eye(self.M) + np.dot(np.transpose(phi_x), phi_x),
+                self.lamb * np.eye(self.M + 1) + np.dot(np.transpose(phi_x), phi_x),
                 np.dot(np.transpose(phi_x), t)
             )
 

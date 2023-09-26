@@ -73,6 +73,7 @@ def main():
     erreurs_test = np.array([regression.erreur(t_n, p_n)
                              for t_n, p_n in zip(t_test, predictions_test)])
 
+    print("Valeur de M choisie :", regression.M)
     print("Erreur d'entraînement :", "%.2f" % erreurs_entrainement.mean())
     print("Erreur de test :", "%.2f" % erreurs_test.mean())
     print("")

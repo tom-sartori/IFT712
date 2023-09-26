@@ -4,9 +4,7 @@
 parce que le w calculé est de dimension self.M
 ^^^^^^ peut-être la cause du fait que la méthode qui utilise sklearn ne marche pas
 
-WTF erreur de train > erreur de test
-
 TODO :
 - warnings
 - corriger le problème de la méthode qui utilise sklearn
--tester pour être sûr que ça marche dans tous les cas
+- tester pour être sûr que ça marche dans tous les cas
