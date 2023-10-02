@@ -1,4 +1,4 @@
-# IFT712
+# IFT712 - Techniques d'apprentissage
 
 ## Contributeurs
 
