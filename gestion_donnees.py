@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
-#####
-# Alexandre Theisse 23 488 180
-# Louis-Vincent Capelli 23 211 533
-# Tom Sartori 23 222 497
+###
+# |          Nom          | Matricule  |   CIP    |
+# |:---------------------:|:----------:|:--------:|
+# |   Alexandre Theisse   | 23 488 180 | thea1804 |
+# | Louis-Vincent Capelli | 23 211 533 | capl1101 |
+# |      Tom Sartori      | 23 222 497 | sart0701 |
 ###
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class GestionDonnees:
@@ -67,4 +69,3 @@ class GestionDonnees:
 
         plt.plot(x_mod, t_mod, 'k')
         plt.ylim(ymin=-1.5, ymax=4.5)
-

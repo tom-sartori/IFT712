@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
-#####
-# Alexandre Theisse 23 488 180
-# Louis-Vincent Capelli 23 211 533
-# Tom Sartori 23 222 497
+###
+# |          Nom          | Matricule  |   CIP    |
+# |:---------------------:|:----------:|:--------:|
+# |   Alexandre Theisse   | 23 488 180 | thea1804 |
+# | Louis-Vincent Capelli | 23 211 533 | capl1101 |
+# |      Tom Sartori      | 23 222 497 | sart0701 |
 ###
 
-import numpy as np
 import random
+
+import numpy as np
 from sklearn import linear_model
 
 
@@ -94,7 +97,7 @@ class Regression:
             X_valid = X_split[i]
             t_valid = t_split[i]
             self.M = tested_M[i]
-            
+
             self.entrainement(X_train, t_train)
 
             predictions_valid = np.array([self.prediction(x) for x in X_valid])
@@ -166,5 +169,5 @@ class Regression:
         la cible ``t`` et la prediction ``prediction``.
         """
         # AJOUTER CODE ICI
-        
+
         return (t - prediction) ** 2

@@ -1,10 +1,20 @@
 # -*- coding: utf-8 -*-
 
-import numpy as np
+###
+# |          Nom          | Matricule  |   CIP    |
+# |:---------------------:|:----------:|:--------:|
+# |   Alexandre Theisse   | 23 488 180 | thea1804 |
+# | Louis-Vincent Capelli | 23 211 533 | capl1101 |
+# |      Tom Sartori      | 23 222 497 | sart0701 |
+###
+
 import sys
-import solution_regression as sr
-import gestion_donnees as gd
+
 import matplotlib.pyplot as plt
+import numpy as np
+
+import gestion_donnees as gd
+import solution_regression as sr
 
 
 def warning(erreur_test, erreur_apprentissage, bruit):
@@ -20,10 +30,11 @@ def warning(erreur_test, erreur_apprentissage, bruit):
     # Écrivez des conditions simples, avec des valeurs approximatives "harcodées",
     # qui vérifient si nous sommes en présence de sur- ou sous-apprentissage.
 
-    if (erreur_test - erreur_apprentissage)/bruit > 2:
+    if (erreur_test - erreur_apprentissage) / bruit > 2:
         print("WARNING: sur-apprentissage possible")
-    if erreur_apprentissage/bruit > 1:
+    if erreur_apprentissage / bruit > 1:
         print("WARNING: sous-apprentissage possible")
+
 
 ################################
 # Execution en tant que script 
@@ -35,7 +46,6 @@ def warning(erreur_test, erreur_apprentissage, bruit):
 
 
 def main():
-    
     if len(sys.argv) < 8:
         print("Usage: python regression.py sk modele_gen nb_train nb_test bruit M lambda\n")
         print("\t sk=0: using_sklearn=False, sk=1: using_sklearn=True")
@@ -47,7 +57,7 @@ def main():
         print("\t lambda: lambda utilisé par le modele de Ridge\n")
         print(" exemple: python3 regression.py 1 sin 20 20 0.3 10 0.001\n")
         return
-    
+
     skl = int(sys.argv[1]) > 0.5
     modele_gen = sys.argv[2]
     nb_train = int(sys.argv[3])
@@ -70,10 +80,10 @@ def main():
     predictions_test = np.array([regression.prediction(x) for x in x_test])
 
     # Calcul des erreurs
-    erreurs_entrainement = np.array([regression.erreur(t_n, p_n)
-                                     for t_n, p_n in zip(t_train, predictions_train)])
-    erreurs_test = np.array([regression.erreur(t_n, p_n)
-                             for t_n, p_n in zip(t_test, predictions_test)])
+    erreurs_entrainement = np.array(
+        [regression.erreur(t_n, p_n) for t_n, p_n in zip(t_train, predictions_train)])
+    erreurs_test = np.array(
+        [regression.erreur(t_n, p_n) for t_n, p_n in zip(t_test, predictions_test)])
 
     print("Valeur de M choisie :", regression.M)
     print("Erreur d'entraînement :", "%.2f" % erreurs_entrainement.mean())
@@ -92,6 +102,7 @@ def main():
     else:
         plt.suptitle('Resultat AVEC recherche d\'hyperparametres')
     plt.show()
+
 
 if __name__ == "__main__":
     main()
