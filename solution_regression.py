@@ -69,8 +69,9 @@ class Regression:
 
         # K-Fold
         k = 10
-        tested_M = np.arange(1, k + 1)
-        errors_valid = np.zeros(k)
+        max_M = 10
+        tested_M = np.arange(1, max_M + 1)
+        errors_valid = np.zeros(max_M)
 
         if len(X) < k:
             k = len(X)
@@ -91,17 +92,20 @@ class Regression:
         t_split = np.array_split(t_copy, k)
 
         # Hyperparameter optimization
-        for i in range(0, k):
-            X_train = np.concatenate(X_split[:i] + X_split[i + 1:])
-            t_train = np.concatenate(t_split[:i] + t_split[i + 1:])
-            X_valid = X_split[i]
-            t_valid = t_split[i]
-            self.M = tested_M[i]
+        for m in tested_M:
+            self.M = m
 
-            self.entrainement(X_train, t_train)
+            # K-Fold
+            for i in range(0, k):
+                X_train = np.concatenate(X_split[:i] + X_split[i + 1:])
+                t_train = np.concatenate(t_split[:i] + t_split[i + 1:])
+                X_valid = X_split[i]
+                t_valid = t_split[i]
+                
+                self.entrainement(X_train, t_train)
 
-            predictions_valid = np.array([self.prediction(x) for x in X_valid])
-            errors_valid[i] = np.array([self.erreur(t_n, p_n) for t_n, p_n in zip(t_valid, predictions_valid)]).mean()
+                predictions_valid = self.prediction(X_valid)
+                errors_valid[m - 1] += np.sum(np.array([self.erreur(t_n, p_n) for t_n, p_n in zip(t_valid, predictions_valid)]))
 
         self.M = tested_M[np.argmin(errors_valid)]
 
@@ -159,8 +163,7 @@ class Regression:
         afin de calculer la prediction y(x,w) (equation 3.1 et 3.3).
         """
         # AJOUTER CODE ICI
-
-        return np.dot(np.transpose(self.w), self.fonction_base_polynomiale(x))
+        return np.dot(self.w, np.transpose(self.fonction_base_polynomiale(x)))
 
     @staticmethod
     def erreur(t, prediction):
