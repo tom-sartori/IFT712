@@ -96,8 +96,11 @@ class ClassifieurLineaire:
         a préalablement été appelée. Elle doit utiliser les champs ``self.w``
         et ``self.w_0`` afin de faire cette classification.
         """
-        # AJOUTER CODE ICI
-        return 0
+
+        # TODO : AJOUTER CODE ICI
+        # Frontière: y = (a * x) + b <=> y = (self.w * x) + self.w_0 = 0
+        y = np.dot(self.w, x) + self.w_0
+        return 1 if y >= 0 else 0
 
     @staticmethod
     def erreur(t, prediction):
