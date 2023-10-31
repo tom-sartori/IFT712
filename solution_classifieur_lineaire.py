@@ -68,17 +68,38 @@ class ClassifieurLineaire:
         """
         if self.methode == 1:  # Classification generative
             print('Classification generative')
-            # AJOUTER CODE ICI
+            # TODO : AJOUTER CODE ICI
 
         elif self.methode == 2:  # Perceptron + SGD, learning rate = 0.001, nb_iterations_max = 1000
             print('Perceptron')
-            # AJOUTER CODE ICI
+
+            # TODO : AJOUTER CODE ICI
+            learning_rate = 0.001
+            nb_iterations_max = 1000
+
+            # Remplace 0 par -1 et laisse les 1.
+            t_train_bis = np.where(t_train == 0, -1, t_train)
+
+            for i in range(nb_iterations_max):
+                mauvaise_classe = False
+                for j in range(len(t_train)):
+                    if self.erreur(t=t_train[j], prediction=self.prediction(x_train[j])):
+                        # Si erreur alors mal classé et on met à jour les poids.
+                        mauvaise_classe = True
+                        self.w = self.w + learning_rate * (x_train[j] * t_train_bis[j] + self.lamb * self.w)
+                        self.w_0 = self.w_0 + learning_rate * (t_train_bis[j] + self.lamb * self.w_0)
+
+                if not mauvaise_classe:
+                    break
 
         else:  # Perceptron + SGD [sklearn] + learning rate = 0.001 + penalty 'l2' voir http://scikit-learn.org/
             print('Perceptron [sklearn]')
 
             # TODO : AJOUTER CODE ICI
-            clf = Perceptron(eta0=0.001, penalty='l2', alpha=self.lamb)
+            learning_rate = 0.001
+            penalty = 'l2'
+
+            clf = Perceptron(eta0=learning_rate, penalty=penalty, alpha=self.lamb)
             clf.fit(X=x_train, y=t_train)
             self.w = clf.coef_[0]
             self.w_0 = clf.intercept_[0]
@@ -111,7 +132,7 @@ class ClassifieurLineaire:
         """
 
         # TODO : AJOUTER CODE ICI
-        return 1 if t == prediction else 0
+        return 0 if t == prediction else 1
 
     def afficher_donnees_et_modele(self, x_train, t_train, x_test, t_test):
         """
