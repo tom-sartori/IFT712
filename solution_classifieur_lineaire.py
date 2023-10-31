@@ -106,8 +106,9 @@ class ClassifieurLineaire:
         1. si la cible ``t`` et la prédiction ``prediction``
         sont différentes, 0. sinon.
         """
-        # AJOUTER CODE ICI
-        return 0
+
+        # TODO : AJOUTER CODE ICI
+        return 1 if t == prediction else 0
 
     def afficher_donnees_et_modele(self, x_train, t_train, x_test, t_test):
         """
