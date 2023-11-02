@@ -2,6 +2,15 @@ import numpy as np
 import sklearn.svm
 import matplotlib.pyplot as plt
 
+
+###
+# |          Nom          | Matricule  |   CIP    |
+# |:---------------------:|:----------:|:--------:|
+# |   Alexandre Theisse   | 23 488 180 | thea1804 |
+# | Louis-Vincent Capelli | 23 211 533 | capl1101 |
+# |      Tom Sartori      | 23 222 497 | sart0701 |
+###
+
 def test_sklearn_svm(X_train, y_train, X_test, y_test):
     model = sklearn.svm.LinearSVC()
     model.fit(X_train, y_train)

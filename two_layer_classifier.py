@@ -1,8 +1,17 @@
 import numpy as np
 
 
+###
+# |          Nom          | Matricule  |   CIP    |
+# |:---------------------:|:----------:|:--------:|
+# |   Alexandre Theisse   | 23 488 180 | thea1804 |
+# | Louis-Vincent Capelli | 23 211 533 | capl1101 |
+# |      Tom Sartori      | 23 222 497 | sart0701 |
+###
+
 class TwoLayerClassifier(object):
-    def __init__(self, x_train, y_train, x_val, y_val, num_features, num_hidden_neurons, num_classes, activation='relu'):
+    def __init__(self, x_train, y_train, x_val, y_val, num_features, num_hidden_neurons, num_classes,
+                 activation='relu'):
         self.x_train = x_train
         self.y_train = y_train
         self.x_val = x_val
@@ -143,11 +152,12 @@ class TwoLayerClassifier(object):
         #############################################################################
         # TODO: update w with momentum                                              #
         #############################################################################
-        v=0 # remove this line
+        v = 0  # remove this line
         #############################################################################
         #                          END OF YOUR CODE                                 #
         #############################################################################
         self.momentum_cache_v_prev[id(w)] = v
+
 
 class TwoLayerNet(object):
     """
@@ -228,12 +238,13 @@ class DenseLayer(object):
     """
     This class encodes a layer (could be the hidden layer or the output layer)
     """
+
     def __init__(self, in_size, out_size, activation=None):
         self.activation = activation  # Note, 'relu', or 'sigmoid'
         self.W = None
         self.dW = None
-        self.in_size = in_size # number of input neurons
-        self.out_size = out_size # number of output neurons
+        self.in_size = in_size  # number of input neurons
+        self.out_size = out_size  # number of output neurons
         self.reinit()
 
         self.last_x = None
@@ -264,7 +275,7 @@ class DenseLayer(object):
         # TODO: Compute forward pass.  Do not forget to add 1 to x in case of bias  #
         # C.f. function augment(x)                                                  #
         #############################################################################
-        f = self.W[1] ## REMOVE THIS LINE
+        f = self.W[1]  ## REMOVE THIS LINE
 
         #############################################################################
         #                          END OF YOUR CODE                                 #

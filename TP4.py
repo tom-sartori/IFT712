@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+###
+# |          Nom          | Matricule  |   CIP    |
+# |:---------------------:|:----------:|:--------:|
+# |   Alexandre Theisse   | 23 488 180 | thea1804 |
+# | Louis-Vincent Capelli | 23 211 533 | capl1101 |
+# |      Tom Sartori      | 23 222 497 | sart0701 |
+###
+
 import numpy as np
 import matplotlib.pyplot as plt
 import itertools
@@ -151,7 +159,7 @@ def main():
 	model = LinearClassifier(X_train, y_train, X_val, y_val, num_classes=3, bias=True)
 	loss_train_curve, loss_val_curve, accu_train_curve, accu_val_curve = model.train(lr=0.001,num_epochs=25, l2_reg=0.01)
 
-	# Illustration de la loss et de l'accuracy (le % de biens classés) à chaque itération     
+	# Illustration de la loss et de l'accuracy (le % de biens classés) à chaque itération
 	utils.plot_curves(loss_train_curve, loss_val_curve, accu_train_curve, accu_val_curve)
 
 	print('[Training]   Loss: {:.3f}   Accuracy: {:.3f}'.format(loss_train_curve[-1], accu_train_curve[-1]))
@@ -173,7 +181,7 @@ def main():
 	    params = (lr, reg)
 	    curves = model.train(num_epochs=25, lr=lr, l2_reg=reg, lr_decay=lr_decay)
 	    loss_train_curve, loss_val_curve, accu_train_curve, accu_val_curve = curves
-	    
+
 	    val_accu = accu_val_curve[-1]
 	    if val_accu > best_accu:
 	        print('Best val accuracy: {:.3f} | lr: {:.0e} | l2_reg: {:.0e}'.format(val_accu, lr, reg))
@@ -181,7 +189,7 @@ def main():
 	        best_params = params
 	        best_model = model
 	        best_curves = curves
-	        
+
 	model = best_model
 	utils.plot_curves(*best_curves)
 
@@ -224,9 +232,9 @@ def main():
 
 
     # CELL 12
-    #Choisissez le type de données que vous voulez 
+    #Choisissez le type de données que vous voulez
 
-	# NOTE IMPORTANTE: on vous encourage à tester différentes bases de données.  Ceci dit, 
+	# NOTE IMPORTANTE: on vous encourage à tester différentes bases de données.  Ceci dit,
 	# votre solution sera testée avec Ncircles (N=4).  Vous devez donc tester cette option.
 	dataset_type = 'Ncircles'
 	if dataset_type == 'moons':
@@ -377,7 +385,7 @@ def main():
     # CELL 21
     # On instancie notre modèle; cette fois-ci avec les données complètes.
 	num_hidden_neurons = 20
-	model = TwoLayerClassifier(X_train, y_train, X_val, y_val, num_features=2, 
+	model = TwoLayerClassifier(X_train, y_train, X_val, y_val, num_features=2,
 	                           num_hidden_neurons=num_hidden_neurons, num_classes=num_classes, activation='relu')
 
 
@@ -386,7 +394,7 @@ def main():
 	loss_train_curve, loss_val_curve, accu_train_curve, accu_val_curve = model.train(num_epochs=200, lr=1e-2, l2_reg=0.0,
 	                                                                                 momentum=0.5)
 
-	# Illustration de la loss et de l'accuracy (le % de biens classés) à chaque itération     
+	# Illustration de la loss et de l'accuracy (le % de biens classés) à chaque itération
 	utils.plot_curves(loss_train_curve, loss_val_curve, accu_train_curve, accu_val_curve)
 
 	print('[Training]   Loss: {:.3f}   Accuracy: {:.3f}'.format(loss_train_curve[-1], accu_train_curve[-1]))
@@ -409,7 +417,7 @@ def main():
 	    params = (lr, reg)
 	    curves = model.train(num_epochs=50, lr=lr, l2_reg=reg, lr_decay=lr_decay,momentum=0.5)
 	    loss_train_curve, loss_val_curve, accu_train_curve, accu_val_curve = curves
-	    
+
 	    val_accu = accu_val_curve[-1]
 	    if val_accu > best_accu:
 	        print('Best val accuracy: {:.3f} | lr: {:.0e} | l2_reg: {:.0e}'.format(val_accu, lr, reg))
@@ -419,7 +427,7 @@ def main():
 	        best_curves = curves
 	    else:
 	        print('accuracy: {:.3f} | lr: {:.0e} | l2_reg: {:.0e}'.format(val_accu, lr, reg))
-	        
+
 	model = best_model
 	utils.plot_curves(*best_curves)
 

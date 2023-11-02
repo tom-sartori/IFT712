@@ -1,6 +1,14 @@
 import numpy as np
 
 
+###
+# |          Nom          | Matricule  |   CIP    |
+# |:---------------------:|:----------:|:--------:|
+# |   Alexandre Theisse   | 23 488 180 | thea1804 |
+# | Louis-Vincent Capelli | 23 211 533 | capl1101 |
+# |      Tom Sartori      | 23 222 497 | sart0701 |
+###
+
 class LinearClassifier(object):
     def __init__(self, x_train, y_train, x_val, y_val, num_classes, bias=False):
         self.x_train = x_train
