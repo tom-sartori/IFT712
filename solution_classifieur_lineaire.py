@@ -69,6 +69,53 @@ class ClassifieurLineaire:
         if self.methode == 1:  # Classification generative
             print('Classification generative')
             # TODO : AJOUTER CODE ICI
+            # Calcul de N1 et N2
+            N1 = 0
+            N2 = 0
+            for i in range(len(t_train)):
+                if t_train[i] == 1:
+                    # classe 1
+                    N1 += 1
+                else:
+                    # classe 2
+                    N2 += 1
+            
+            # Calcul de p
+            p = N1 / (N1 + N2)
+
+            # Calcul de mu1 et mu2
+            mu1 = np.zeros(len(x_train[0]))
+            mu2 = np.zeros(len(x_train[0]))
+            for i in range(len(t_train)):
+                if t_train[i] == 1:
+                    # classe 1
+                    mu1 += x_train[i]
+                else:
+                    # classe 2
+                    mu2 += x_train[i]
+            mu1 /= N1
+            mu2 /= N2
+
+            # Calcul de sigma
+            sigma = np.zeros((len(x_train[0]), len(x_train[0])))
+            S1 = np.zeros((len(x_train[0]), len(x_train[0])))
+            S2 = np.zeros((len(x_train[0]), len(x_train[0])))
+            for i in range(len(t_train)):
+                if t_train[i] == 1:
+                    # classe 1
+                    S1 += np.dot(np.transpose([x_train[i] - mu1]), [x_train[i] - mu1])
+                else:
+                    # classe 2
+                    S2 += np.dot(np.transpose([x_train[i] - mu2]), [x_train[i] - mu2])
+            sigma = N1 / (N1 + N2) * S1 + N2 / (N1 + N2) * S2
+            sigma += self.lamb * np.identity(len(x_train[0]))
+
+            # Calcul de w et w_0
+            self.w = np.dot(np.linalg.inv(sigma), mu1 - mu2)
+            self.w_0 = -1 / 2 * np.dot(np.dot(np.transpose(mu1), np.linalg.inv(sigma)), mu1) + 1 / 2 * np.dot(np.dot(np.transpose(mu2), np.linalg.inv(sigma)), mu2) + np.log(p / (1 - p))
+
+            print('w = ', self.w, 'w_0 = ', self.w_0, '\n')
+
 
         elif self.methode == 2:  # Perceptron + SGD, learning rate = 0.001, nb_iterations_max = 1000
             print('Perceptron')
