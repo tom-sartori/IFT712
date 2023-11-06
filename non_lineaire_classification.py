@@ -40,7 +40,6 @@ def analyse_erreur(err_train, err_test):
 
 
 def main():
-
     if len(sys.argv) < 6:
         usage = "\n Usage: python non_lineaire_classification.py type_noyau nb_train nb_test lin validation\
         \n\n\t type_noyau: rbf, lineaire, polynomial, sigmoidal\
@@ -68,11 +67,16 @@ def main():
     else:
         mp.validation_croisee(x_train, t_train)
 
-    # ~= À MODIFIER =~. 
+    # TODO :  ~= À MODIFIER =~.
     # AJOUTER CODE AFIN DE CALCULER L'ERREUR D'APPRENTISSAGE
     # ET DE VALIDATION EN % DU NOMBRE DE POINTS MAL CLASSES
-    err_train = 50
-    err_test = 50
+    prediction_train = [mp.prediction(x) for x in x_train]  # [1, 1, 0, ....]
+    nb_diff_train = (t_train != prediction_train).sum()  # Nombre d'éléments tel que : t_train[i] != prediction_train[i]
+    err_train = (nb_diff_train / len(t_train)) * 100  # (nb différents / nb total) * 100
+
+    prediction_test = [mp.prediction(x) for x in x_test]
+    nb_diff_test = (t_test != prediction_test).sum()
+    err_test = (nb_diff_test / len(t_test)) * 100
 
     print('Erreur train = ', err_train, '%')
     print('Erreur test = ', err_test, '%')
