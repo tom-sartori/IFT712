@@ -13,8 +13,6 @@ Execution dans un terminal
 
 Exemple:
    python non_lineaire_classification.py rbf 100 200 0 0
-
-Vos Noms (Vos Matricules) .~= À MODIFIER =~.
 """
 
 import numpy as np
@@ -28,7 +26,18 @@ def analyse_erreur(err_train, err_test):
     Fonction qui affiche un WARNING lorsqu'il y a apparence de sur ou de sous
     apprentissage
     """
-    #AJOUTER CODE ICI
+    # TODO : AJOUTER CODE ICI
+
+    # Si err_train très petit et err_test élevé, alors sur-apprentissage.
+    # Si err_train élevé et err_test élevé, alors sous-apprentissage.
+
+    precision = 10
+
+    if precision < err_test - err_train:
+        print("Attention : sur-apprentissage. ")
+    elif precision < err_train and precision < err_test:
+        print("Attention : sous-apprentissage. ")
+
 
 def main():
 
