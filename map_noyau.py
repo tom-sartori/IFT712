@@ -69,8 +69,17 @@ class MAPnoyau:
         classification binaire, la prediction est +1 lorsque y(x)>0.5 et 0
         sinon
         """
-        #AJOUTER CODE ICI
-        return 0
+        # TODO : AJOUTER CODE ICI
+
+        # k(x, x') = phi(x)^T * phi(x')     (6.1)
+        # y(x)  = a^T * Phi * phi(x)        (6.9)
+        #       = a^T * k
+        # Return y(x) > 0.5 ? 1 : 0
+
+        k = self.k(x=self.x_train, x_prime=x)
+        y = np.matmul(np.transpose(self.a), k)
+
+        return 1 if y > 0.5 else 0
 
     def erreur(self, t, prediction):
         """
