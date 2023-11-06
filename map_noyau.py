@@ -33,8 +33,6 @@ class MAPnoyau:
         self.noyau = noyau
         self.x_train = None
 
-        
-
     def entrainement(self, x_train, t_train):
         """
         Entraîne une méthode d'apprentissage à noyau de type Maximum a
@@ -54,8 +52,38 @@ class MAPnoyau:
         l'equation 6.8 du livre de Bishop et garder en mémoire les données
         d'apprentissage dans ``self.x_train``
         """
-        #AJOUTER CODE ICI
-        
+        # TODO : AJOUTER CODE ICI
+
+        # x_train: un tableau 2D Numpy, où la n-ième rangée correspond à l'entrée x_n
+        # t_train: un tableau 1D Numpy où le n-ième élément correspond à la cible t_n
+        # self.noyau: 'rbf' | 'lineaire' | 'sigmoidal' | 'polynomial'
+        # self.sigma_square
+
+        # Params :
+        # self.c
+        # self.b
+        # self.d
+        # self.M
+
+        # Poids de régularisation :
+        # self.lamb
+
+        # Assigner :
+        # self.a = ( K + (\lamb * I_N) )^-1 * t         (6.8)
+        # self.x_train
+
+        self.x_train = x_train
+
+        K = self.k(x=self.x_train, x_prime=self.x_train)
+        I_N = np.identity(len(t_train))
+        t = np.transpose(t_train)
+
+        a = K + (self.lamb * I_N)
+        a = np.linalg.inv(a)
+        a = np.matmul(a, t)
+
+        self.a = a  # ( K + (\lamb * I_N) )^-1 * t      (6.8)
+
     def prediction(self, x):
         """
         Retourne la prédiction pour une entrée representée par un tableau
