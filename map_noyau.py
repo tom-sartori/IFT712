@@ -77,8 +77,11 @@ class MAPnoyau:
         Retourne la différence au carré entre
         la cible ``t`` et la prédiction ``prediction``.
         """
-        # AJOUTER CODE ICI
-        return 0.
+        # TODO : AJOUTER CODE ICI
+
+        # Return (t - prediction)^2
+
+        return (t - prediction) ** 2
 
     def validation_croisee(self, x_tab, t_tab):
         """
