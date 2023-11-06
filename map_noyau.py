@@ -110,3 +110,34 @@ class MAPnoyau:
         plt.contourf(iX, iY, contour_out > 0.5)
         plt.scatter(x_tab[:, 0], x_tab[:, 1], s=(t_tab + 0.5) * 100, c=t_tab, edgecolors='y')
         plt.show()
+
+    def k(self, x, x_prime):
+        if self.noyau == 'rbf':
+            # k(x, x') = exp{ - (||x - x'||^2) / (2 * sigma^2) }
+            k = np.linalg.norm(x - x_prime, axis=1) ** 2
+            k = k / (2 * self.sigma_square)
+            k = - k
+            k = np.exp(k)
+
+        elif self.noyau == 'lineaire':
+            # k(x, x') = x^T * x'
+            k = np.matmul(x_prime, np.transpose(x))
+
+        elif self.noyau == 'polynomial':
+            # k(x, x') = (x^T * x' + c)^M
+            k = np.matmul(x_prime, np.transpose(x))
+            k = k + self.c
+            k = k ** self.M
+
+        elif self.noyau == 'sigmoidal':
+            # k(x, x') = tanh(b * x^T * x' + d)
+            k = self.b * np.transpose(x)
+            k = np.matmul(x_prime, k)
+            k = k + self.d
+            k = np.tanh(k)
+
+        else:
+            print("Noyau inconnu. ")
+            return
+
+        return k
