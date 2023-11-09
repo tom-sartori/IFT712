@@ -120,6 +120,11 @@ class MAPnoyau:
 
         return (t - prediction) ** 2
 
+    def pourcentage_erreur(self, x_tab, t_tab) -> float:
+        predictions = [self.prediction(x) for x in x_tab]  # [1, 1, 0, ....]
+        nb_diff = (t_tab != predictions).sum()  # Nombre d'éléments tel que : t_train[i] != prediction_train[i]
+        return (nb_diff / len(t_tab)) * 100  # (nb différents / nb total) * 100
+
     def validation_croisee(self, x_tab, t_tab):
         """
         Cette fonction trouve les meilleurs hyperparametres ``self.sigma_square``,
@@ -134,12 +139,84 @@ class MAPnoyau:
         """
         # TODO : AJOUTER CODE ICI
 
-        # self.sigma_square: [0.000000001, 2]
-        # self.lamb: [0.000000001, 2]
-        # self.c [0, 5]
-        # self.b: [0.00001, 0.01]
-        # self.d: [0.00001, 0.01]
-        # self.M: [2, 6]
+        print("Début validation croisée. Peut être long. Possible de changer la variable \"num\", à la ligne 165 pour "
+              "aller plus vite. ")
+
+        data_shuffled = np.c_[x_tab, t_tab]
+        np.random.shuffle(data_shuffled)  # Mélange l'ordre des données.
+        x_tab = data_shuffled[:, :-1]
+        t_tab = data_shuffled[:, -1]
+
+        k = 10
+        best_err_test = float("inf")  # On veut minimiser l'erreur, donc on initialise au max float.
+        best_lamb = self.lamb
+        best_sigma_square = self.sigma_square
+        best_c = self.c
+        best_M = self.M
+        best_b = self.b
+        best_d = self.d
+
+        # self.lamb: [0.000000001, 2]               Global.
+        # self.sigma_square: [0.000000001, 2]       Rbf.
+        # self.c [0, 5]                             Polynomial.
+        # self.M: [2, 6]                            Polynomial.
+        # self.b: [0.00001, 0.01]                   Sigmoidal.
+        # self.d: [0.00001, 0.01]                   Sigmoidal.
+
+        num = 15  # Nombre de valeurs à tester pour chaque paramètre.
+        for lamb in np.linspace(start=0.000000001, stop=2, num=num):
+            self.lamb = lamb
+
+            if self.noyau == 'rbf':
+                for sigma_square in np.linspace(start=0.000000001, stop=2, num=num):
+                    self.sigma_square = sigma_square
+                    err_mean = self.get_validation_croisee_erreur_moyenne(x_tab, t_tab, k)
+                    if err_mean < best_err_test:  # Si on a trouvé une meilleure moyenne d'erreurs.
+                        best_err_test = err_mean
+                        best_lamb = lamb
+                        best_sigma_square = sigma_square
+
+            elif self.noyau == 'lineaire':
+                err_mean = self.get_validation_croisee_erreur_moyenne(x_tab, t_tab, k)
+                if err_mean < best_err_test:  # Si on a trouvé une meilleure moyenne d'erreurs.
+                    best_err_test = err_mean
+                    best_lamb = lamb
+
+            elif self.noyau == 'polynomial':
+                for c in np.linspace(start=0, stop=5, num=num):
+                    self.c = c
+                    for M in np.linspace(start=2, stop=6, num=num):
+                        self.M = M
+                        err_mean = self.get_validation_croisee_erreur_moyenne(x_tab, t_tab, k)
+                        if err_mean < best_err_test:  # Si on a trouvé une meilleure moyenne d'erreurs.
+                            best_err_test = err_mean
+                            best_lamb = lamb
+                            best_c = c
+                            best_M = M
+
+            elif self.noyau == 'sigmoidal':
+                for b in np.linspace(start=0.00001, stop=0.01, num=num):
+                    self.b = b
+                    for d in np.linspace(start=0.00001, stop=0.01, num=num):
+                        self.d = d
+                        err_mean = self.get_validation_croisee_erreur_moyenne(x_tab, t_tab, k)
+                        if err_mean < best_err_test:
+                            best_err_test = err_mean
+                            best_lamb = lamb
+                            best_b = b
+                            best_d = d
+            else:
+                print("Noyau inconnu. ")
+                return
+
+        self.lamb = best_lamb
+        self.sigma_square = best_sigma_square
+        self.c = best_c
+        self.M = best_M
+        self.b = best_b
+        self.d = best_d
+
+        self.entrainement(x_tab, t_tab)
 
     def affichage(self, x_tab, t_tab):
 
@@ -185,3 +262,23 @@ class MAPnoyau:
             return
 
         return k
+
+    def get_validation_croisee_erreur_moyenne(self, x_tab, t_tab, k) -> float:
+        n = len(t_tab)
+        fold_size = n // k
+        err_mean = 0
+
+        for i in range(k):
+            inf_test = i * fold_size
+            sup_test = inf_test + fold_size
+
+            x_train = np.delete(x_tab, np.s_[inf_test:sup_test], axis=0)  # Enleve la partie de test.
+            t_train = np.delete(t_tab, np.s_[inf_test:sup_test])  # Enleve la partie de test.
+
+            x_test = x_tab[inf_test:sup_test, :]  # Données de test contenues entre les bornes.
+            t_test = t_tab[inf_test:sup_test]  # Données de test contenues entre les bornes.
+
+            self.entrainement(x_train=x_train, t_train=t_train)
+            err_mean += self.pourcentage_erreur(x_test, t_test)  # Ajoute erreur de test à la moyenne.
+
+        return err_mean / k
