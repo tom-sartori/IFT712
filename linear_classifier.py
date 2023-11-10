@@ -143,9 +143,6 @@ class LinearClassifier(object):
         - loss as single float
         - gradient with respect to weights W; an array of same shape as W
         """
-        # Initialize the loss and gradient to zero.
-        loss = 0.0
-        dW = np.zeros_like(self.W)
 
         #############################################################################
         # TODO: Compute the softmax loss and its gradient.                          #
@@ -157,6 +154,20 @@ class LinearClassifier(object):
         # To avoid numerical instability, subtract the maximum                      #
         # class score from all scores of a sample.                                  #
         #############################################################################
+
+        # (5.25) : y_k(x, w) = exp(a_k(x, w)) / sum_j(exp(a_j(x, w)))
+        #                    = e / sum_j(e)             Avec e = exp(a_k(x, w))
+        e = np.exp(np.matmul(x, self.W))
+        y_k = e / np.sum(e)
+
+        # (4.108) : E(w_1,...,w_k) = -ln(T|w_1,...,w_k) = - sum_{n=1}^N( sum_{k=1}^K( t_{nk} * ln(y_{nk}) ) )
+        t_k = np.zeros(3)
+        t_k[y] = 1
+        loss = - np.sum(t_k * np.log(y_k))
+        loss += reg * np.sum(self.W ** 2)
+
+        # (4.109) : nabla_{w_j} E(w_1,...,w_k) = sum_{n=1}^N( y_{nj} - t_{nj} ) * phi_n
+        dW = np.matmul(x[np.newaxis].T, np.subtract(y_k, t_k)[np.newaxis]) + (reg * self.W)
 
         #############################################################################
         #                          END OF YOUR CODE                                 #
