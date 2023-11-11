@@ -95,10 +95,18 @@ class LinearClassifier(object):
 
          Returns a class label for each sample (a number between 0 and num_classes-1)
         """
-        class_label = np.zeros(X.shape[0])
         #############################################################################
         # TODO: Return the best class label.                                        #
         #############################################################################
+
+        if self.bias & (X[1].size < self.W[0].size):
+            X = augment(X)
+
+        # (5.25) : y_k(x, w) = exp(a_k(x, w)) / sum_j(exp(a_j(x, w)))
+        #                    = e / sum_j(e)             Avec e = exp(a_k(x, w))
+        e = np.exp(np.matmul(X, self.W))
+        y_k = e / np.sum(e)
+        class_label = np.argmax(y_k, axis=1)
 
         #############################################################################
         #                          END OF YOUR CODE                                 #
