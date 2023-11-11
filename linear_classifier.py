@@ -131,6 +131,14 @@ class LinearClassifier(object):
         # TODO: Compute the softmax loss & accuracy for a series of samples X,y .   #
         #############################################################################
 
+        N = len(X)
+        for i in range(N):
+            accu += self.predict(X[i]) == y[i]
+            loss += self.cross_entropy_loss(X[i], y[i], reg)[0]
+
+        accu /= N
+        loss /= N
+
         #############################################################################
         #                          END OF YOUR CODE                                 #
         #############################################################################
