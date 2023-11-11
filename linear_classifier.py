@@ -138,8 +138,7 @@ class LinearClassifier(object):
 
         for i, x in enumerate(X):
             loss += self.cross_entropy_loss(x, y[i], reg)[0]
-            if class_labels[i] == y[i]:
-                accu += 1
+            accu += class_labels[i] == y[i]
 
         N = y.size
         loss /= N
