@@ -173,7 +173,9 @@ class LinearClassifier(object):
 
         # (5.25) : y_k(x, w) = exp(a_k(x, w)) / sum_j(exp(a_j(x, w)))
         #                    = e / sum_j(e)             Avec e = exp(a_k(x, w))
-        e = np.exp(np.matmul(x, self.W))
+        f = np.matmul(x, self.W)
+        f -= np.max(f)
+        e = np.exp(f)
         y_k = e / np.sum(e)
 
         # (4.108) : E(w_1,...,w_k) = -ln(T|w_1,...,w_k) = - sum_{n=1}^N( sum_{k=1}^K( t_{nk} * ln(y_{nk}) ) )
