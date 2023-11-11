@@ -167,7 +167,7 @@ class LinearClassifier(object):
         loss += reg * np.sum(self.W ** 2)
 
         # (4.109) : nabla_{w_j} E(w_1,...,w_k) = sum_{n=1}^N( y_{nj} - t_{nj} ) * phi_n
-        dW = np.matmul(x[np.newaxis].T, np.subtract(y_k, t_k)[np.newaxis]) + (reg * self.W)
+        dW = np.matmul(x[np.newaxis].T, np.subtract(y_k, t_k)[np.newaxis]) + 2 * reg * self.W
 
         #############################################################################
         #                          END OF YOUR CODE                                 #
