@@ -1,0 +1,104 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{IFT712 TP2 Théorique}
+\author{alexandre.theisse }
+\date{October 2023}
+
+
+
+\begin{document}
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for horizontal lines, change thickness here
+	
+	\center % Centre everything on the page
+	
+	%------------------------------------------------
+	%	Headings
+	%------------------------------------------------
+	
+	\textsc{\LARGE Université de Sherbrooke}\\[1.5cm] % Main heading such as the name of your university/college
+	
+	%------------------------------------------------
+	%	Title
+	%------------------------------------------------
+	
+	\HRule\\[0.4cm]
+	
+	{\huge\bfseries IFT712 - TP3 Théorique}\\[0.4cm]
+	
+	\HRule\\[1.5cm]
+	
+	%------------------------------------------------
+	%	Author(s)
+	%------------------------------------------------
+
+	{\large\textit{Authors}}\\
+            \textsc{Alexandre Theisse | thea1804}\\
+            \textsc{Louis-Vincent Capelli | capl1101}\\
+            \textsc{Tom Sartori | sart0701}\\
+	
+	%------------------------------------------------
+	%	Date
+	%------------------------------------------------
+	
+	\vfill\vfill\vfill % Position the date 3/4 down the remaining page
+	
+	{\large\today} % Date, change the \today to a set date if you want to be precise
+	
+	\vfill % Push the date up 1/4 of the remaining page
+	
+\end{titlepage}
+\section{Question 1}
+Montrons que l'équation de la régression linéaire à posteriori est la suivante à l'aide d'une représentation duale :
+\[J( w) = \frac{1}{2} \sum_{i=1}^{N}( w^T \Phi(x_{n}) -t_{n} )^2 +\frac{\lambda}{2}w^T w \]
+est donnée par l'équation suivante :
+\[ y(x) = K(x)^T (k+ \lambda I)^{-1} t= a^T\Phi(x) \]
+Soit la fonction J(w) telle que son gradient soit égale à 0 :
+\[\frac{\partial J(w)}{\partial w} = \sum_{i=1}^{N}( w^T \Phi(x_{n}) -t_{n} )\Phi(x_{n})  +\lambda w = 0\]
+\[\Leftrightarrow \sum_{i=1}^{N}( w^T \Phi(x_{n}) -t_{n} )\Phi(x_{n})  = -\lambda w \]
+\[\Leftrightarrow w = \frac{-1}{\lambda}\sum_{i=1}^{N}( w^T\Phi(x_{n}) \Phi(x_{n}) -t_{n} )\Phi(x_{n}) = -\sum_{i=1}^{N}\frac{( w^T\Phi(x_{n})  -t_{n} )}{\lambda}\Phi(x_{n}) \]
+Ainsi on pose que le coefficient $a_{n}$ est le suivant :
+\[  \forall n, a_{n} = \frac{( w^T\Phi(x_{n})  -t_{n} )}{\lambda}  \forall n \]
+On a alors pour w que :
+\[w = \sum_{i=1}^{N} a_{n} \Phi(x_{n})\]
+\[\Rightarrow w= \Phi^T a\]
+avec $\Phi = [\Phi(x_{1}), ... ,\Phi(x_{n}) ]$ et $a = [a_{1}, ... ,a_{n} ] $
+On a donc J(w), en utilisant la formule trouver pour w ,qui est égale à :
+\[J( w) = \frac{1}{2} \sum_{i=1}^{N}( a^T\Phi \Phi(x_{n}) -t_{n} )^2 +\frac{\lambda}{2}a^T\Phi \Phi^T a\]
+\[ \Leftrightarrow \frac{1}{2} \sum_{i=1}^{N} ((a^T\Phi \Phi(x_{n}) )^2 -2t_{n}a^T\Phi \Phi(x_{n}) + t_{n}^2 ) +\frac{\lambda}{2}a^T\Phi \Phi^T a\ \]
+\[ \Leftrightarrow \frac{1}{2} \sum_{i=1}^{N} a^T\Phi \Phi(x_{n}) a^T\Phi \Phi(x_{n} )-\sum_{i=1}^{N}t_{n}a^T\Phi \Phi(x_{n}) + \frac{1}{2} \sum_{i=1}^{N}t_{n}t_{n}  +\frac{\lambda}{2}a^T\Phi \Phi^T a\ \]
+\[ \Leftrightarrow \frac{1}{2}  a^T\Phi \Phi^T\Phi \Phi^T a - t a^T\Phi \Phi^T + \frac{1}{2} t^2  +\frac{\lambda}{2}a^T\Phi \Phi^T a\ \]
+
+On peut alors poser $K=\Phi \Phi^T $ ce qui revient à :
+\[ J(a) =\frac{1}{2}  a^T K K a -  a^T K t+ \frac{1}{2} t^2  +\frac{\lambda}{2}a^T K a\ \]
+Puis en forçant le gradient de la nouvelle formule J(a) à 0 on obtient :
+\[\nabla_{a} J(a)= 0\]
+\[\Leftrightarrow   K K a -   K t+   +\lambda a^T K = 0 \]
+\[ \Leftrightarrow K K a + \lambda a^T K = Kt \]
+\[ \Leftrightarrow  K a + \lambda a^T  = t\]
+\[ \Leftrightarrow  (K  + \lambda I)a  = t\]
+\[ \Leftrightarrow  a  = (K  + \lambda I)^{-1}t\]
+
+Enfin pour la prédiction d'une entrée donnée on applique les fonctions à chaque données avec $x_{n} \Rightarrow \Phi(x_{n}) \forall n$
+On part alors de $y_{w}(x) = a^T \Phi \Phi(x)$
+\[ \Leftrightarrow [ (K  + \lambda I)^{-1}t]^T\Phi \Phi(x)\]
+On transpose l'ensemble de la formule car $y_{w}(x)^T=y_{w}(x)$
+\[ \Leftrightarrow (K  + \lambda I)^{-1}t[\Phi \Phi(x)]^T\]
+Il ne manque plus qu'à déterminer $[\Phi \Phi(x)]^T$ :
+\[[\Phi \Phi(x)]^T =\Phi(x)^T \Phi \]
+et $\Phi^T= \Phi^T=(\Phi(x_{1}),...,\Phi(x_{n}))$
+Donc on obtient :
+\[\Phi(x_{1})\Phi(x)^T,...,\Phi(x_{n})\Phi(x)^T = K(x)^T\]
+Soit finalement $y_{w}(x) = K(x)^T(K  + \lambda I)^{-1}t$
+
+\clearpage
+\section{Question 2}
+Afin d'expliciter le lien entre le vecteur de support et la fonction de prédiction $y_{w}(x)$. il nous faut donner une définition de support.\\
+Le vecteur de support fait référence aux échantillons de données qui se trouvent le plus près de l'hyperplan de séparation (ou de la marge maximale) entre les classes. Ces échantillons sont essentiels pour déterminer l'hyperplan optimal et sont donc considérés comme des "vecteurs de support" car ils soutiennent ou définissent la position de l'hyperplan. \\
+Ainsi, les vecteurs de supports contribue à la détermination de la frontières de decision de la fonction de prédiction et donc le calcul des prédictions et l'attribution des classes.
+
+La Hinge loss est une fonction de pertes utilisée dans les machines à vecteurs de support. Son objectif principal est d'évaluer la performance d'un modèle de classification en mesurant la marge d'erreur pour chaque exemple d'entraînement.
+
+\end{document}
