@@ -85,6 +85,7 @@ class Metrics:
         for metrics in metrics_list:
             data = pd.concat([data, metrics.get_dataframe()])
 
+        sns.set(rc={'figure.figsize': (15, 8)})
         ax = sns.barplot(data=data, y='Classifiers', x='Scores', hue='Metrics')
         # ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
         for bars in ax.containers:
