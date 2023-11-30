@@ -81,3 +81,17 @@ class Data:
             resized_images.append(a)
 
         return resized_images
+    
+    def print_images_from_class(self, class_name: str, nb_images: int = 10):
+        """ Print the first nb_images images of the class class_name as a subplot.
+
+        :param class_name (str): The class name.
+        :param nb_images (int): The number of images to print. Default value is 10.
+        """
+        images = [image for image, label in zip(self.x_image_tab, self.y_tab) if label == class_name]
+        fig, ax = plt.subplots(1, nb_images, figsize=(20, 20))
+        for i in range(nb_images):
+            ax[i].imshow(images[i], cmap='gray')
+            ax[i].axis('off')
+        plt.show()
+        
