@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import StratifiedShuffleSplit
 
 
 class Data:
@@ -26,7 +26,7 @@ class Data:
         resized_images_height (int): The height of the resized images.
     """
 
-    def __init__(self, test_size: float = 0.25):
+    def __init__(self, test_size: float = 0.25, random_state: int = 2):
         """ Constructor for the Data object.
 
         :param test_size (float): The size of the testing data. Default value is 0.25.
@@ -37,8 +37,11 @@ class Data:
         self.x_tab: [np.ndarray] = df.drop(['id', 'species'], axis=1).values
         self.y_tab: [np.ndarray] = df['species'].values
 
-        self.x_train, self.x_test, self.y_train, self.y_test = (
-            train_test_split(self.x_tab, self.y_tab, test_size=test_size, random_state=2))
+        sss = StratifiedShuffleSplit(n_splits=2, test_size=test_size, random_state=random_state)
+        train = sss.split(self.x_tab, self.y_tab).__next__()
+        self.x_train, self.x_test = self.x_tab[train[0]], self.x_tab[train[1]]
+        test = sss.split(self.x_tab, self.y_tab).__next__()
+        self.y_train, self.y_test = self.y_tab[test[0]], self.y_tab[test[1]]
 
         # Images data.
         self.x_image_tab = [plt.imread('src/data/images/{}.jpg'.format(leaf[0])) for leaf in df.values]
@@ -49,9 +52,11 @@ class Data:
         # Matrix of size(nb_images, max_width * max_height).
         flatten_resized_images = np.array([image.flatten() for image in resized_images])
 
-        self.x_image_train, self.x_image_test, self.y_image_train, self.y_image_test = train_test_split(
-            flatten_resized_images, self.y_tab, test_size=test_size, shuffle=3
-        )
+        sss = StratifiedShuffleSplit(n_splits=2, test_size=test_size, random_state=random_state)
+        train = sss.split(flatten_resized_images, self.y_tab).__next__()
+        self.x_image_train, self.x_image_test = flatten_resized_images[train[0]], flatten_resized_images[train[1]]
+        test = sss.split(flatten_resized_images, self.y_tab).__next__()
+        self.y_image_train, self.y_image_test = self.y_tab[test[0]], self.y_tab[test[1]]
 
     def __resize_images(self) -> [np.ndarray]:
         """ Resize the images to the max width and height of the images.
