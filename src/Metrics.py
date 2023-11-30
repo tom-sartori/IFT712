@@ -3,7 +3,6 @@ import warnings
 import pandas as pd
 import seaborn as sns
 from sklearn.exceptions import UndefinedMetricWarning
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 
 from src.Data import Data
 
@@ -31,22 +30,15 @@ class Metrics:
             self.name = name
             self.score = score
 
-    def __init__(self, classifier, data: Data):
+    def __init__(self, classifier_name):
         """ Constructor for the Metrics object.
 
         :param classifier (sklearn classifier): the classifier to evaluate.
         :param data (Data): the data to use for the evaluation.
         """
 
-        prediction = classifier.predict(data.x_test)
-
-        self.classifier_name = classifier.__class__.__name__
-        self.metrics: [Metrics.Metric] = [
-            Metrics.Metric('accuracy_score', accuracy_score(data.y_test, prediction)),
-            Metrics.Metric('f1_score', f1_score(data.y_test, prediction, average='macro')),
-            Metrics.Metric('precision_score', precision_score(data.y_test, prediction, average='macro')),
-            Metrics.Metric('recall_score', recall_score(data.y_test, prediction, average='macro'))
-        ]
+        self.classifier_name = classifier_name
+        self.metrics = []
 
     def __str__(self):
         """ String representation of the Metrics object.
@@ -59,6 +51,15 @@ class Metrics:
             value += f'\n\t{metric.name} : {metric.score}'
 
         return value
+
+    def add_metric(self, name: str, score: float):
+        """ Add a metric to the metrics list.
+
+        :param name (str): the name of the metric.
+        :param score (float): the score of the metric.
+        """
+
+        self.metrics.append(Metrics.Metric(name, score))
 
     def get_dataframe(self) -> pd.DataFrame:
         """ Get the metrics as a pandas dataframe.
