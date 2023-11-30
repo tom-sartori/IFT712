@@ -4,8 +4,6 @@ import pandas as pd
 import seaborn as sns
 from sklearn.exceptions import UndefinedMetricWarning
 
-from src.Data import Data
-
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.simplefilter(action='ignore', category=UndefinedMetricWarning)
 
