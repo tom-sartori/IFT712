@@ -26,7 +26,7 @@ class Data:
         resized_images_height (int): The height of the resized images.
     """
 
-    def __init__(self, test_size: float = 0.25, random_state: int = 2):
+    def __init__(self, test_size: float = 0.25, random_state: int = 2, include_images: bool = True):
         """ Constructor for the Data object.
 
         :param test_size (float): The size of the testing data. Default value is 0.25.
@@ -43,6 +43,8 @@ class Data:
         test = sss.split(self.x_tab, self.y_tab).__next__()
         self.y_train, self.y_test = self.y_tab[test[0]], self.y_tab[test[1]]
 
+        if not include_images:
+            return
         # Images data.
         self.x_image_tab = [plt.imread('src/data/images/{}.jpg'.format(leaf[0])) for leaf in df.values]
 
