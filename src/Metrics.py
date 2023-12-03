@@ -91,7 +91,7 @@ class Metrics:
         # ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
 
         if len(metrics_list) > 5:
-            plt.rc('font', size=6)
+            plt.rc('font', size=5)
             
         for bars in ax.containers:
             ax.bar_label(bars, fmt='%.3f')
