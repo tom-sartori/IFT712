@@ -1,5 +1,15 @@
 CV = 2
 
+DecisionTreeClassifier : 3s
+Best parameters:
+	criterion   : gini
+	max_depth   : None
+	max_features: sqrt
+	min_samples_leaf: 1
+	min_samples_split: 5
+	splitter    : best
+Best score: 0.537
+
 RandomForestClassifier : 2min10
 Best parameters:
 	criterion   : gini
