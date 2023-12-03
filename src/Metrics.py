@@ -3,6 +3,7 @@ import warnings
 import pandas as pd
 import seaborn as sns
 from sklearn.exceptions import UndefinedMetricWarning
+import matplotlib.pyplot as plt
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 warnings.simplefilter(action='ignore', category=UndefinedMetricWarning)
@@ -79,7 +80,7 @@ class Metrics:
         """
 
         metrics_list: [Metrics] = metrics_list
-
+        
         data = pd.DataFrame()
         for metrics in metrics_list:
             data = pd.concat([data, metrics.get_dataframe()])
@@ -88,5 +89,11 @@ class Metrics:
         ax.set(xlim=(0, 1.09))
         ax.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
         # ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
+
+        if len(metrics_list) > 5:
+            plt.rc('font', size=6)
+            
         for bars in ax.containers:
             ax.bar_label(bars, fmt='%.3f')
+
+        plt.rc('font', size=12)
