@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex rapport"] 1701842903 "rapport.aux" "rapport.bbl" "rapport" 1701843036 0
+["bibtex rapport"] 1701842903 "rapport.aux" "rapport.bbl" "rapport" 1701843677 0
   "./references.bib" 1701829546 3777 005a3890aafe21f5bb4d887ada6c219b ""
   "c:/texlive/2023/texmf-dist/bibtex/bst/base/plain.bst" 1693267751 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "rapport.aux" 1701843035 5918 e2f2103e3022505ffa159e1499913326 "pdflatex"
+  "rapport.aux" 1701843674 5918 e2f2103e3022505ffa159e1499913326 "pdflatex"
   (generated)
   "rapport.bbl"
   "rapport.blg"
   (rewritten before read)
-["pdflatex"] 1701843033 "c:/Users/LV/OneDrive/Documents/_Cours/UdS/ML/TP/IFT712/rapport/rapport.tex" "rapport.pdf" "rapport" 1701843036 0
-  "c:/Users/LV/OneDrive/Documents/_Cours/UdS/ML/TP/IFT712/rapport/rapport.tex" 1701843033 20378 64692f57ee87588ffec84e8579076fd3 ""
+["pdflatex"] 1701843671 "c:/Users/LV/OneDrive/Documents/_Cours/UdS/ML/TP/IFT712/rapport/rapport.tex" "rapport.pdf" "rapport" 1701843677 0
+  "c:/Users/LV/OneDrive/Documents/_Cours/UdS/ML/TP/IFT712/rapport/rapport.tex" 1701843669 20655 f57e4a7146c1fbc4c593b1c40305f332 ""
   "c:/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1693268095 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1693268951 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/jknappen/ec/tcrm0800.tfm" 1693268575 1536 05df9db6aeccc4eea94fec15c9024f79 ""
@@ -109,11 +109,11 @@
   "img/svc_perfs_all_data.png" 1701731850 25058 36aa0ef4865953043bb235886161719d ""
   "img/svc_perfs_without_margin.png" 1701731722 24609 586db15ea99f4113d54502bbbc20d64c ""
   "img/svc_perfs_without_texture.png" 1701731804 24480 ac1c4e07e22cf1af15d6c045e5fb9fea ""
-  "rapport.aux" 1701843035 5918 e2f2103e3022505ffa159e1499913326 "pdflatex"
+  "rapport.aux" 1701843674 5918 e2f2103e3022505ffa159e1499913326 "pdflatex"
   "rapport.bbl" 1701842904 2797 e85674c1fda5db31845263b335b15656 "bibtex rapport"
-  "rapport.out" 1701843035 2841 ba429ec4d8850c4d673d83f64cb21793 "pdflatex"
-  "rapport.tex" 1701843033 20378 64692f57ee87588ffec84e8579076fd3 ""
-  "rapport.toc" 1701843035 1556 e28ebe01ecee14ac949fe5c49dd7a627 "pdflatex"
+  "rapport.out" 1701843674 2841 ba429ec4d8850c4d673d83f64cb21793 "pdflatex"
+  "rapport.tex" 1701843669 20655 f57e4a7146c1fbc4c593b1c40305f332 ""
+  "rapport.toc" 1701843674 1556 e28ebe01ecee14ac949fe5c49dd7a627 "pdflatex"
   (generated)
   "rapport.aux"
   "rapport.log"
