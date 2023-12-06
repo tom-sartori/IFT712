@@ -47,7 +47,11 @@ Les features ont été séparées des labels afin de pouvoir entraîner les mod�
 ensuite évaluer leur performance en comparant les labels prédits avec les labels réels.
 
 Nous avons également formé un ensemble d'entraînement et un ensemble de test à partir 
-de l'ensemble d'entraînement initial fourni par Kaggle. Pour ce faire, nous avons utilisé la classe
+de l'ensemble d'entraînement initial fourni par Kaggle. Nous n'avons pas pu utiliser
+l'ensemble de test fourni par Kaggle car il ne contenait pas les labels correspondants
+aux échantillons.
+
+Pour ce faire, nous avons utilisé la classe
 \textit{StratifiedShuffleSplit} \cite{SSS} de \textit{scikit-learn} qui permet de séparer les données
 en conservant la proportion de chaque classe dans chaque ensemble.
 
@@ -308,10 +312,22 @@ décidé d'essayer une approche de classification sur les images.
 \subsection{Prétraitement des images}
 Pour ce faire, nous avons
 utilisé la bibliothèque \textit{Pandas} \cite{pandas} pour transformer les images en
-tableaux de pixels que nous avons applatis pour obtenir finalement un vecteur de features de taille
+tableaux de pixels.
+
+Comme elles ne sont pas toutes de la même taille, nous avons dû les redimensionner
+pour que chacune soit représentée par une vecteur de même dimension. Nous avons
+essayé plusieurs manières,
+mais celle que nous avons retenue est de déterminer la taille maximale des images
+et de redimensionner toutes les images à cette taille en les centrant et en remplissant
+les pixels manquants avec des pixels noirs. Cette méthode permet de conserver
+la forme de la feuille et de ne pas les compresser afin de ne pas perdre d'information,
+au niveau des contours notamment.
+
+Nous avons enfin applati ces tableaux pour obtenir finalement un vecteur de features de taille
 1778337.
 
-Les images sont en noir et blanc, donc chaque pixel ne peut prendre que 2 valeurs.
+Les images étant en noir et blanc, parmi les 256 valeurs possibles pour chaque pixel,
+seules 2 sont utilisées : 0 pour le noir et 255 pour le blanc.
 
 \begin{figure}[h]
     \centering
@@ -319,20 +335,17 @@ Les images sont en noir et blanc, donc chaque pixel ne peut prendre que 2 valeur
     \caption{Exemples d'images de la base de données}
 \end{figure}
 
-Comme elles ne sont pas toutes de la même taille, nous avons dû les redimensionner
-pour que chacune soit représentée par une vecteur de même dimension. Nous avons
-essayer plusieurs manières,
-mais celle que nous avons retenue est de déterminer la taille maximale des images
-et de redimensionner toutes les images à cette taille en les centrant et en remplissant
-les pixels manquants avec des pixels noirs. Cette méthode permet de conserver
-la forme de la feuille et de ne pas les compresser afin de ne pas perdre d'information,
-au niveau des contours notamment.
+
 
 L'approche que nous avons choisi pourrait poser problème car certaines feuilles se
 retrouvent plus petites que d'autres dans les images finales, mais nous avons estimé
 que cela ne devrait pas être le cas ici car même si les feuilles sont de tailles
 différentes, au sein d'une même classe elles ont généralement des tailles similaires.
-Cet effet pourrait donc même être bénéfique pour la classification.
+
+Cet effet pourrait donc même être bénéfique pour la classification et pourrait permettre
+d'expliquer pourquoi le fait de redimensionner les images en les plaçant en haut à gauche
+(notre première approche)
+donne des résultats un peu moins bons que la méthode que nous avons finalement choisie.
 
 \subsection{Classification}
 
