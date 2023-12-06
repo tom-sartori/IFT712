@@ -1,0 +1,83 @@
+\begin{thebibliography}{10}
+
+\bibitem{leafKaggle}
+Will~Cukierski Julia~Elliott, Meghan~O'Connell.
+\newblock Leaf classification.
+\newblock \url{https://kaggle.com/competitions/leaf-classification}, 2016.
+
+\bibitem{pandas}
+Pandas.
+\newblock Pandas.
+\newblock \url{https://pandas.pydata.org/}, 2023.
+
+\bibitem{ABC}
+Scikit-learn.
+\newblock Adaboost classifier.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html}, 2023.
+
+\bibitem{BC}
+Scikit-learn.
+\newblock Bagging classifier.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html}, 2023.
+
+\bibitem{CV}
+Scikit-learn.
+\newblock Cross validation.
+\newblock \url{https://scikit-learn.org/stable/modules/cross\_validation.html}, 2023.
+
+\bibitem{DTC}
+Scikit-learn.
+\newblock Decision tree classifier.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html}, 2023.
+
+\bibitem{GNB}
+Scikit-learn.
+\newblock Gaussian naive bayes classifier.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.naive\_bayes.GaussianNB.html}, 2023.
+
+\bibitem{GSCV}
+Scikit-learn.
+\newblock Grid search cross validation.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.model\_selection.GridSearchCV.html}, 2023.
+
+\bibitem{KNN}
+Scikit-learn.
+\newblock K-nearest neighbors classifier.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html}, 2023.
+
+\bibitem{LR}
+Scikit-learn.
+\newblock Logistic regression classifier.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.linear\_model.LogisticRegression.html}, 2023.
+
+\bibitem{MLP}
+Scikit-learn.
+\newblock Multi-layer perceptron classifier.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.neural\_network.MLPClassifier.html}, 2023.
+
+\bibitem{RFC}
+Scikit-learn.
+\newblock Random forest classifier.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}, 2023.
+
+\bibitem{SGD}
+Scikit-learn.
+\newblock Stochastic gradient descent classifier.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.linear\_model.SGDClassifier.html}, 2023.
+
+\bibitem{SSS}
+Scikit-learn.
+\newblock Stratified shuffle split.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.model\_selection.StratifiedShuffleSplit.html}, 2023.
+
+\bibitem{SVC}
+Scikit-learn.
+\newblock Support vector classification.
+\newblock \url{https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html}, 2023.
+
+\bibitem{leafMargin}
+Wikipedia.
+\newblock Leaf morphology.
+\newblock \url{https://en.wikipedia.org/wiki/Glossary\_of\_leaf\_morphology}, 2023.
+
+\end{thebibliography}
