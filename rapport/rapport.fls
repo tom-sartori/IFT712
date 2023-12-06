@@ -86,6 +86,10 @@ INPUT c:/texlive/2023/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 INPUT c:/texlive/2023/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/tools/multicol.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/tools/multicol.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/geometry/geometry.sty
+INPUT c:/texlive/2023/texmf-dist/tex/latex/geometry/geometry.sty
+INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifvtex.sty
+INPUT c:/texlive/2023/texmf-dist/tex/generic/iftex/ifvtex.sty
 INPUT c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT c:/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 INPUT ./rapport.aux

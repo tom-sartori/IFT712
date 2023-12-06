@@ -4,6 +4,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{url}
 \usepackage{multicol}
+\usepackage[a4paper, total={5.5in, 8.5in}]{geometry}
 
 \title{IFT712 - Rapport de projet de session}
 
@@ -78,27 +79,28 @@ Ci-dessous, les résultats obtenus avec un SVC \cite{SVC} :
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/svc_perfs_without_margin.png}
+    \includegraphics[width=0.8\textwidth]{img/svc_perfs_without_margin.png}
     \caption{Performances d'un SVC sur les 128 features de shape et texture}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/svc_perfs_without_texture.png}
+    \includegraphics[width=0.8\textwidth]{img/svc_perfs_without_texture.png}
     \caption{Performances d'un SVC sur les 128 features de margin et shape}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{img/svc_perfs_all_data.png}
+    \includegraphics[width=0.8\textwidth]{img/svc_perfs_all_data.png}
     \caption{Performances d'un SVC sur l'ensemble des 192 features}
 \end{figure}
-
 \newpage
+
 Les résultats obtenus confirment notre intuition : les 3 groupes de features sont complémentaires
 et fournissent des meilleurs résultats lorsqu'ils sont utilisés ensemble. Nous avons donc
 décidé pour la suite de l'étude de considérer les 192 features à notre disposition.
 
+\newpage
 \subsection{Classification}
 
 \subsubsection{Modèles utilisés}
@@ -125,6 +127,7 @@ d'autres sont des modèles à base de probabilités, etc.
 Le but était de maximiser nos chances de trouver un modèle performant sur cette
 base de données en utilisant des modèles assez différents les uns des autres.
 
+\newpage
 \subsubsection{Cross-validation}
 Nous avons commencé par entraîner les modèles sur l'ensemble d'entraînement pour
 avoir un premier aperçu de leurs performances et une base de comparaison.
@@ -137,6 +140,7 @@ Voici les résultats obtenus :
     \caption{Performances des différents modèles sur tout l'ensemble d'entraînement}
 \end{figure}
 
+
 Nous avons ensuite utilisé la fonction \textit{cross\_validate} \cite{CV} de \textit{scikit-learn}
 qui permet de faire une validation croisée avec un nombre de folds donné et d'utiliser 
 le multi-threading pour accélérer le processus. Cette fonction utilise aussi la 
@@ -144,8 +148,8 @@ stratégie de \textit{StratifiedShuffleSplit} \cite{SSS} pour séparer les donn�
 folds tout en conservant la proportion de chaque classe dans chaque fold.
 
 Nous avons donc établi un nombre de folds maximal qui s'assure que chaque fold 
-contient au moins 1 représentant de chaque classe.
-\\\\
+contient au moins un représentant de chaque classe.
+\newpage
 Voici les résultats obtenus :
 
 \begin{figure}[h]
@@ -153,6 +157,7 @@ Voici les résultats obtenus :
     \includegraphics[width=1.2\textwidth]{img/all_perfs_with_cv.png}
     \caption{Performances des différents modèles avec une validation croisée à 10 folds}
 \end{figure}
+
 
 Les résultats obtenus sont similaires à ceux obtenus sans validation croisée, et sont
 même légèrement moins bons pour certains modèles. Cela peut s'expliquer par le fait
@@ -188,6 +193,7 @@ fold de la validation croisée :
 Nous avons donc décidé, pour réduire cet effet, de n'utiliser que 2 ou 3 folds pour la
 validation croisée pour la suite de l'étude.
 
+\newpage
 \subsubsection{Recherche d'hyperparamètres}
 Jusqu'à présent, nous avons utilisé les hyperparamètres par défaut des \\modèles. Pour améliorer
 leurs performances, il fallait donc les optimiser. Pour ce faire, nous avons utilisé la fonction
@@ -406,8 +412,8 @@ Voici les résultats obtenus sans et avec optimisation des hyperparamètres :
     \includegraphics[width=0.8\textwidth]{img/img_perfs_without_cv_withou_hp.png}
     \caption{Performances des 2 modèles sans optimisation des hyperparamètres}
 \end{figure}
-
 \newpage
+
 Nous avons également créé des fonctions permettant de visualiser les prédictions
 des modèles sur les images de test. Voici quelques exemples : 
 
