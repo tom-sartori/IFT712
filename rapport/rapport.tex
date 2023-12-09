@@ -333,7 +333,9 @@ Nous avons enfin applati ces tableaux pour obtenir finalement un vecteur de feat
 1778337.
 
 Les images étant en noir et blanc, parmi les 256 valeurs possibles pour chaque pixel,
-seules 2 sont utilisées : 0 pour le noir et 255 pour le blanc.
+seules 2 sont utilisées : 0 pour le noir et 255 pour le blanc. Nous avons ainsi normalisé
+les valeurs en les divisant par 255 afin de les ramener entre 0 et 1 (elles ne prennent
+donc dans les faits que les valeurs 0 et 1)
 
 \begin{figure}[h]
     \centering
@@ -394,15 +396,16 @@ obtenues pour chaque modèle :
     \end{itemize}
     \item \textit{KNeighborsClassifier} :
     \begin{itemize}
-        \item \textit{algorithm} : TBD
-        \item \textit{leaf\_size} : TBD
-        \item \textit{n\_neighbors} : TBD
-        \item \textit{p} : TBD
-        \item \textit{weights} : TBD
+        \item \textit{algorithm} : auto
+        \item \textit{leaf\_size} : 1
+        \item \textit{n\_neighbors} : 1
+        \item \textit{p} : 1
+        \item \textit{weights} : distance
     \end{itemize}
 \end{itemize}
 \end{small}
 
+\newpage
 \subsection{Résultats}
 
 Voici les résultats obtenus sans et avec optimisation des hyperparamètres :
@@ -412,8 +415,18 @@ Voici les résultats obtenus sans et avec optimisation des hyperparamètres :
     \includegraphics[width=0.8\textwidth]{img/img_perfs_without_cv_withou_hp.png}
     \caption{Performances des 2 modèles sans optimisation des hyperparamètres}
 \end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/img_perfs_without_cv_with_hp.png}
+    \caption{Performances des 2 modèles avec optimisation des hyperparamètres}
+\end{figure}
 \newpage
 
+On constate que les résultats sont un peu meilleurs, notamment pour
+KNeighborsClassifier dont les hyperparamètres optimaux sont plus éloignés de ceux
+par défaut que pour RandomForestClassifier.
+\\\\
 Nous avons également créé des fonctions permettant de visualiser les prédictions
 des modèles sur les images de test. Voici quelques exemples : 
 
