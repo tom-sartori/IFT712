@@ -52,7 +52,8 @@ class Data:
         resized_images = self.__resize_images()
         self.resized_images_width, self.resized_images_height = resized_images[0].shape[0], resized_images[0].shape[1]
         # Matrix of size(nb_images, max_width * max_height).
-        flatten_resized_images = np.array([image.flatten() for image in resized_images])
+        # Normalized between 0 and 1
+        flatten_resized_images = np.array([image.flatten() for image in resized_images])/255
 
         sss = StratifiedShuffleSplit(n_splits=2, test_size=test_size, random_state=random_state)
         train = sss.split(flatten_resized_images, self.y_tab).__next__()
