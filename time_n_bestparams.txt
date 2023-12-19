@@ -1,0 +1,101 @@
+CV = 2
+
+DecisionTreeClassifier : 3s
+Best parameters:
+	criterion   : gini
+	max_depth   : None
+	max_features: sqrt
+	min_samples_leaf: 1
+	min_samples_split: 5
+	splitter    : best
+Best score: 0.537
+
+RandomForestClassifier : 2min10
+Best parameters:
+	criterion   : gini
+	max_features: log2
+	min_samples_split: 2
+	n_estimators: 500
+Best score: 0.980
+
+
+BaggingClassifier : 10min23
+Best parameters:
+	bootstrap   : False
+	bootstrap_features: True
+	max_features: 0.1
+	max_samples : 0.5
+	n_estimators: 100
+Best score: 0.963
+
+
+LogisticRegression : 7min
+Best parameters:
+	C           : 1000
+	max_iter    : 100
+	penalty     : l2
+	solver      : liblinear
+Best score: 0.889
+
+
+SVC : 5s
+Best parameters:
+	C           : 50
+	gamma       : scale
+	kernel      : linear
+Best score: 0.861
+
+
+GaussianNB : 0s
+Best parameters:
+	var_smoothing: 0.005
+Best score: 0.899
+
+
+SGDClassifier : 41s
+Best parameters:
+	alpha       : 0.0001
+	loss        : modified_huber
+	max_iter    : 2000
+	penalty     : l1
+Best score: 0.764
+
+
+KNeighborsClassifier : 9s
+Best parameters:
+	algorithm   : auto
+	leaf_size   : 1
+	n_neighbors : 1
+	p           : 1
+	weights     : distance
+Best score: 0.905
+
+
+GradientBoostingClassifier : 28min
+Best parameters:
+	criterion   : friedman_mse
+	learning_rate: 0.025
+	max_depth   : 2
+	max_features: log2
+	min_samples_split: 10
+	n_estimators: 500
+Best score: 0.920
+
+
+MLPClassifier : 6min47
+Best parameters:
+	activation  : logistic
+	alpha       : 0.01
+	hidden_layer_sizes: (100,)
+	learning_rate: adaptive
+	max_iter    : 500
+	solver      : lbfgs
+Best score: 0.890
+
+
+AdaBoostClassifier : 7min
+Best parameters:
+	algorithm   : SAMME.R
+	learning_rate: 0.01
+	n_estimators: 500
+Best score: 0.557
