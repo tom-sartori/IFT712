@@ -1,0 +1,165 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{IFT712 TP2 Théorique}
+\author{alexandre.theisse }
+\date{October 2023}
+
+
+
+\begin{document}
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for horizontal lines, change thickness here
+	
+	\center % Centre everything on the page
+	
+	%------------------------------------------------
+	%	Headings
+	%------------------------------------------------
+	
+	\textsc{\LARGE Université de Sherbrooke}\\[1.5cm] % Main heading such as the name of your university/college
+	
+	%------------------------------------------------
+	%	Title
+	%------------------------------------------------
+	
+	\HRule\\[0.4cm]
+	
+	{\huge\bfseries IFT712 - TP2 Théorique}\\[0.4cm]
+	
+	\HRule\\[1.5cm]
+	
+	%------------------------------------------------
+	%	Author(s)
+	%------------------------------------------------
+
+	{\large\textit{Authors}}\\
+            \textsc{Alexandre Theisse | thea1804}\\
+            \textsc{Louis-Vincent Capelli | capl1101}\\
+            \textsc{Tom Sartori | sart0701}\\
+	
+	%------------------------------------------------
+	%	Date
+	%------------------------------------------------
+	
+	\vfill\vfill\vfill % Position the date 3/4 down the remaining page
+	
+	{\large\today} % Date, change the \today to a set date if you want to be precise
+	
+	\vfill % Push the date up 1/4 of the remaining page
+	
+\end{titlepage}
+
+\section{Question 1}
+Soit la fonction d'énergie suivante : \[ E( \overrightarrow{w} )= \sum_{n=1}^{N}(t_{n} - \overrightarrow{w}^T \overrightarrow{\Phi}(x_{n}))^2 + \lambda\overrightarrow{w}^T \overrightarrow{w} \]
+
+Montrons que la solution permettant grâce à la regression de Ridge de minimiser la fonction ci-dessus est :
+\[ \overrightarrow{w} = (\Phi^T \Phi + \lambda I)^{-1} \Phi^T t\]
+Pour se faire, nous allons dériver la fonction d'énergie E en fonction de \overrightarrow{w} et le but étant de minimiser cette fonction. Nous partirons de l'hypothèse que la dérivée est nulle.
+
+   
+    \[
+    \nabla_{\overrightarrow{w}}E(\overrightarrow{w}) =0 \Leftrightarrow \sum_{n=1}^{N} -2t_{n}\overrightarrow{\Phi}(x_{n}) + 2\overrightarrow{w}^T \overrightarrow{\Phi}(x_{n})^2 + 2\lambda \overrightarrow{w}^T  = 0 \\\]
+    On décompose la somme en deux sommes. Une dépendant d'élement avec un \overrightarrow{w} et l'autre sans cette dépendance. De plus, on supprime les constantes multiplicatives des sommes. 
+  \[  \Leftrightarrow \sum_{n=1}^{N} -t_{n}\overrightarrow{\Phi}(x_{n}) + \sum_{n=1}^{N} \overrightarrow{w}^T \overrightarrow{\Phi}(x_{n})^2 + \lambda \overrightarrow{w}^T  = 0 \\
+    \]
+    On passe la somme avec les $t_{n} $ de l'autre côté pour enlever sa négativité
+    \[
+    \Leftrightarrow \sum_{n=1}^{N} t_{n}\overrightarrow{\Phi}(x_{n})  = \sum_{n=1}^{N} \overrightarrow{w}^T \overrightarrow{\Phi}(x_{n})^2 + \lambda \overrightarrow{w}^T   \\\]
+    Le fait que deux sommes finis soit égale implique que $\forall$ n de la somme, les éléments à l'intérieur de la somme sont égaux.
+   \[ 
+    \Leftrightarrow \overrightarrow{\Phi}(x)^T t = \overrightarrow{w}^T \overrightarrow{\Phi}(x)^2 + \lambda \overrightarrow{w}^T \\
+    \]  
+    Factorisation par \overrightarrow{w} pour pouvoir ensuite pouvoir l'inverser l'élement facteur car celui-ci est une somme de termes inversible donc est inversible.
+    
+    \[ 
+    \Leftrightarrow \Phi^T t = \overrightarrow{w} (\Phi\Phi^T+ \lambda I) \\
+    \] 
+    
+    \[ 
+    \Leftrightarrow  \overrightarrow{w} = (\Phi(x)\Phi^T+ \lambda I)^{-1} \overrightarrow{\Phi}(x)^T t  
+    \]  
+    Ainsi, nous trouvons un \overrightarrow{w} telle que la fonction est un optimum locale. Or pour que celle-ci soit un minimum il faut que sa dérivée seconde soit positive.
+    \[\nabla^2_{\overrightarrow{w}}E(\overrightarrow{w})= \sum_{n=1}^{N} \overrightarrow{\Phi}(x_{n})^2 + \lambda \ge 0\]
+    La somme est positive car une somme de termes positives est positives. Donc, \overrightarrow{w} est la solution qui minimise la fonction E.    
+
+
+
+\section{Question 2}
+Soit une régression logistique avec comme paramètre \overrightarrow{w} pouvant reproduire la probabilitée conditionnelle suivante :
+\[p( C_{1} | \overrightarrow{\Phi} (\overrightarrow{x}) = \sigma( \overrightarrow{w}^T \overrightarrow{\Phi}(x)) \]
+Si cette régression a une fonction de perte de type cross-entropie alors montrons que :
+\[\overrightarrow{\nabla}E(\overrightarrow{w})= \sum_{n=1}^{N}(y_{n} - t_{n})\overrightarrow{\Phi}(x_{n})\]
+
+Soit \overrightarrow{w} paramètre d'une régression logistique telle que :
+
+\[E(\overrightarrow{w})= - \sum{n=1}^{N} t_{n} ln( y_{\overrightarrow{w}}(\overrightarrow{\Phi}(\overrightarrow{x_{n}}))  +  (1-t_{n}) ln(1- y_{\overrightarrow{w}}(\overrightarrow{\Phi}(\overrightarrow{x_{n}}))\]
+et que :
+\[y_{n} =y_{\overrightarrow{w}}(\overrightarrow{\Phi}(\overrightarrow{x_{n}}))=p( C_{1} | \overrightarrow{\Phi} (\overrightarrow{x}) = \sigma( \overrightarrow{w}^T \overrightarrow{\Phi}(x))  \]
+Soit :
+\[y_{n} = \frac{1}{1+ e^{-\overrightarrow{w}^T \overrightarrow{\Phi}(x_{n})} }\]
+On peut donc approximer la fonction de perte à :
+\[E(\overrightarrow{w})= -\sum_{n=1}^{N}t_{n}ln(y_{n}) + 1-t_{n}ln(1-y_{n})\]
+Donc on a alors que :
+\[\overrightarrow{\nabla}E(\overrightarrow{w})=-\sum_{n=1}^{N} \frac{dy_{n}}{dw}(\frac{t_{n}}{y_{n}} - \frac{(1-t_{n})}{1-y_{n}} )\]
+
+Maintenant il faut que nous calculions la dérivée de $y_{n} par rapport à w$ pour ensuite pouvoir simplifier la formule du gradient.
+\[\frac{dy_{n}}{dw}= \frac{d( \frac{1}{1+ e^{-\overrightarrow{w}^T \overrightarrow{\Phi}(x_{n})} })}{dw}\]
+\[\frac{dy_{n}}{dw}= \frac{d( 1+ e^{-\overrightarrow{w}^T \overrightarrow{\Phi}(x_{n})})}{dw}\frac{-1}{(1+ e^{-\overrightarrow{w}^T \overrightarrow{\Phi}(x_{n})}))^2}\]
+\[\frac{dy_{n}}{dw}=  \overrightarrow{\Phi}(x_{n})e^{-\overrightarrow{w}^T \overrightarrow{\Phi}(x_{n})}\frac{1}{(1+ e^{-\overrightarrow{w}^T \overrightarrow{\Phi}(x_{n})}))^2}\]
+\[\frac{dy_{n}}{dw}=\overrightarrow{\Phi}(x_{n})( \frac{1}{y_{n}} -1)y_{n}^2\]
+\[\frac{dy_{n}}{dw}=\overrightarrow{\Phi}(x_{n})(1-y_{n})y_{n}\]
+Ainsi, on peut remplacer cette formule dans la somme ce qui fait :
+\[\overrightarrow{\nabla}E(\overrightarrow{w})=-\sum_{n=1}^{N} \overrightarrow{\Phi}(x_{n})(1-y_{n})y_{n}(\frac{t_{n}}{y_{n}} - \frac{(1-t_{n})}{1-y_{n}} )\]
+\[\overrightarrow{\nabla}E(\overrightarrow{w})=-\sum_{n=1}^{N} \overrightarrow{\Phi}(x_{n})((1-y_{n})t_{n}- y_{n}(1-t_{n}) )\]
+\[\overrightarrow{\nabla}E(\overrightarrow{w})=-\sum_{n=1}^{N} \overrightarrow{\Phi}(x_{n})(t_{n}- y_{n})\]
+\[\overrightarrow{\nabla}E(\overrightarrow{w})=\sum_{n=1}^{N} \overrightarrow{\Phi}(x_{n})( y_{n}- t_{n})\]
+
+\section{Question 3}
+Soit X une variable aléatoire à trois valeur telle que :\[
+P(X=1) = p_{1},  P(X=2) = p_{2},  P(X=3) = p_{3}\\
+\]
+\[ p_{1}= 2p_{2}\]
+Soit   \[2p_{2} -p_{1}=0 \hspace{5} \mathrm{ (a)}\] 
+De plus, vu que X est probabilitée alors :
+\[\sum_{x=1}^{3}P(X=i) =1= p_{1}+p_{2}+p_{3}\]
+Soit 
+\[ p_{1}+p_{2}+p_{3} -1=0 \hspace{5} \mathrm{ (b)}\]
+On cherche les valeurs des probabilitées telle que ces valeurs minimise la fonction entropique associée. Soit \[
+H(x)= -p_{1}log(p_{1}) - p_{2}log(p_{2})- p_{3}log(p_{3})
+\]
+Or pour satisfaire les contraîntes énoncées précédemment il faut plutôt minimiser la fonction $\alpha$ telle que :
+\[\alpha = -p_{1}log(p_{1}) - p_{2}log(p_{2})- p_{3}log(p_{3} - \lambda_{1}( p_{1}-2p_{2}) - \lambda_{2}(p_{1}+p_{2}+p_{3} -1) \]
+Ainsi, nous allons calculer le gradient de la fonction d'entropie en dérivant par chacune des variables.
+
+\[ \frac{\partial \alpha}{\partial p_{1}} = -log_{2}(p_{1}) - log_{2}(e) -\lambda_{1} -\lambda_{2}  =0  \hspace{5} \mathrm{ (c)}\\ \] 
+avec \[\frac{dlog(u)}{dx}= log_{2}(e)\frac{1}{u}\frac{du}{dx} \]
+\[\frac{\partial \alpha}{\partial p_{2}} = -log_{2}(p_{2}) -log_{2}(e) +2\lambda_{1} - \lambda_{2} = 0  \hspace{5} \mathrm{ (d)}\\\]
+\[\frac{\partial \alpha}{\partial p_{3}} = -log_{2}(p_{3}) - log_{2}(e)  - \lambda_{2} = 0 \hspace{5} \mathrm{ (e)} \]
+
+Par (e) on obtient que  :
+\[-log_{2}(p_{3}) - log_{2}(e)  = \lambda_{2}\]
+
+Puis en faisant (c) -(d) on obtient :
+\[ -log_{2}(p_{1}) +  log_{2}(p_{2}) -3\lambda_{1}=0 \\\]
+\[\lambda_{1} = \frac{1}{3}log(\frac{p_{2}}{p_{1}})\]
+Or $p_{1} = 2p_{2}$. On a donc :
+\[\lambda_{1}=  \frac{1}{3}log_{2}(\frac{p_{2}}{2p_{2}}) \]
+\[\lambda_{1}=  \frac{1}{3}log_{2}(\frac{1}{2}) = - \frac{1}{3}log_{2}(2)= -\frac{1}{3} \]
+
+Puis par (a) et (b) on déduit que :
+\[ p_{3}= 1- 3p_{2}\]
+
+Enfin, en faisant (d) -(e) on obtient et utilisant que $\lambda_{1} = \frac{1}{3}$ :
+\[-log_{2}(p_{2}) + log_{2}(p_{3}) - \frac{2}{3} = 0 \]
+Puis en utilisant l'expression trouvées juste avant on a que :
+\[log_{2}(\frac{1-3p_{2}}{p_{2}}) = \frac{2}{3}  \]
+En passant à la puissance 2 car nous avons un $log_{2}$ on arrive :
+\[\frac{1-3p_{2}}{p_{2}} = 2^\frac{2}{3}  \]
+\[ \Leftrightarrow p_{2} = \frac{1}{2^\frac{2}{3} + 3} \]
+Puis par $p_{1}= 2p_{2}$ et $p_{3}= 1- 3p_{2}$, on a :
+\[p_{1} =  \frac{2}{2^\frac{2}{3} + 3}\]
+\[p_{3} =  \frac{2^\frac{2}{3}}{2^\frac{2}{3} + 3}\]
+
+\end{document}
